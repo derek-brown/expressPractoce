@@ -1,5 +1,7 @@
 var express = require("express");
 var path = require("path");
+var bodyParser = require("body-parser");
+
 var app = express();
 
 app.set("view engine", "ejs");
@@ -10,9 +12,13 @@ app.set("views", path.join(__dirname, "views"));
 
 //I stopped video at 37:26
 
-app.get("/", function(req, res){
-	res.render("index");
-});
+app.use(bodyParser());
+
+app.use(express.static(path.join(__dirname, "bower_components")));
+
+//routes go here
+
+app.use(require("./todos"));
 
 app.listen(1337, function(){
 	console.log("ready on port 1337");
